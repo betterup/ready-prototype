@@ -2,8 +2,8 @@
    PARTNER / ADMIN shell — dark floating top bar, collapsible
    rail, Invite flow, partner Home.
 
-   The coach shell reuses this chrome (.p-shell / .p-topbar / .p-main), so
-   changes here affect it too. Coach-only overrides are in coach.css.
+   The coach shell used to borrow this chrome; it now owns its own, in
+   coach.css, so nothing here is shared any more.
    ============================================================ */
 /* ---------- PARTNER / ADMIN EXPERIENCE ---------- */
 

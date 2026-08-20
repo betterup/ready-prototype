@@ -310,3 +310,309 @@ export const schedule = {
     },
   ],
 }
+
+/* ============================================================
+   COACH EXPERIENCE
+   Transcribed from the coach-side screenshots. Two deliberate departures from
+   the reference: the coach is the prototype's own coach (`coach` above) rather
+   than the QA account the screenshots were captured under, and member/list
+   names are realistic rather than test fixtures, since this build gets shared.
+   ============================================================ */
+
+/** The coach viewing the shell. Same person the member sees in `coach`. */
+export const coachSelf = {
+  name: coach.name,
+  firstName: 'Maria',
+  /** Matches the member-side coach card, so it reads as the same person. */
+  avatar: '👩🏼‍💼',
+}
+
+/** Partner tools the coach jumps out to. Home shows all four; You shows two. */
+export const coachLinks = ['BetterUp University', 'MightyNetworks', 'Docebo', 'Wingspan']
+
+export const coachHome = {
+  nextSession: {
+    badge: 'Coach assigns next step',
+    kind: 'BetterUp Manage™ Coaching Session',
+    duration: '30 min',
+    title: 'Session with Vanessa Hagood',
+    when: 'Begins next week',
+    cta: 'View profile',
+    hero: 'linear-gradient(155deg,#f6cfc4 0%,#f0a894 42%,#e8846a 100%)',
+  },
+  /** The day column beside it. `now` is the fraction through the visible range
+   *  where the current-time marker sits. */
+  day: {
+    label: 'Thu, Aug 20',
+    hours: ['11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
+    now: 0.185,
+  },
+  checklist: [
+    { title: 'Time to add more availability to your calendar', emoji: '🕰️', bg: '#e6ddfa' },
+    { title: 'Complete session for Agustina Mazzeo', emoji: '🧑🏽‍💼', bg: '#d7e6fb' },
+    { title: 'Complete session for Doran Whitfield', emoji: '🧑🏽‍💼', bg: '#d7e6fb' },
+    { title: 'Complete session for Aaron Burcham', emoji: '🧑🏽‍💼', bg: '#d7e6fb' },
+  ],
+}
+
+/** The 1:1 roster. `avatar` is the two-tone blob the table uses in place of a
+ *  photo; `next`/`last`/`active` are pre-formatted, matching the reference. */
+export type CoachMember = {
+  name: string
+  role: string
+  company: string
+  program?: string
+  next: string
+  last: string
+  active: string
+  modality: string
+  avatar: [string, string]
+  /** In the platform right now. Drives the presence dot and the `Active now`
+   *  treatment, instead of the stale day-count everyone else shows. */
+  online?: boolean
+}
+
+export const coachMembers: CoachMember[] = [
+  { name: 'Doran Whitfield', role: 'Engineering Manager', company: 'Halcyon Health', program: 'Ready Coaching', next: 'Aug 21 at 1:15 PM', last: '—', active: 'Active now', modality: 'Ready', avatar: ['#f0a41c', '#f9cf68'], online: true },
+  { name: 'Paolo Cappelli', role: 'Operations Lead', company: 'Northwind Retail', program: 'BetterUp Manage™', next: 'Mar 27 at 4:30 PM', last: '—', active: '512 days ago', modality: 'BetterUp Manage™', avatar: ['#f4611f', '#f9b03c'] },
+  { name: 'Agustina Mazzeo', role: 'Software Engineer', company: 'Northwind Retail', program: 'BetterUp Manage™', next: 'Dec 16 at 11:45 AM', last: '—', active: '247 days ago', modality: 'BetterUp Manage™', avatar: ['#ef4b3c', '#f7857a'] },
+  { name: 'Alex Ramirez', role: 'Guest Experience Manager', company: 'Northwind Retail', program: 'BetterUp Manage™', next: 'Jan 28 at 1:00 PM', last: '520 days ago', active: '204 days ago', modality: 'BetterUp Manage™', avatar: ['#ef5a2e', '#f79a6b'] },
+  { name: 'Claire Beaumont', role: 'Software Engineer', company: 'Northwind Retail', program: 'BetterUp Manage™', next: 'Feb 3 at 1:45 PM', last: '—', active: '198 days ago', modality: 'BetterUp Manage™', avatar: ['#127a68', '#3fb59a'] },
+  { name: 'Martin Osei', role: 'Claims Specialist', company: 'Meridian Assurance', program: 'Ready Coaching', next: 'Apr 28 at 8:15 AM', last: '—', active: '118 days ago', modality: 'Ready', avatar: ['#0f6f63', '#2f9e8c'] },
+  { name: 'Van Pham', role: 'Developer', company: 'Lantern Software', next: 'Apr 30 at 3:30 PM', last: '—', active: '113 days ago', modality: 'Primary', avatar: ['#16607a', '#3d97ae'] },
+  { name: 'Vanessa Hagood', role: 'Developer', company: 'Halcyon Health', program: 'BetterUp Manage™', next: 'May 7 at 2:30 PM', last: '—', active: '106 days ago', modality: 'BetterUp Manage™', avatar: ['#ee4f45', '#f79088'] },
+  { name: 'Sophie Yuan', role: 'Software Engineering Intern', company: 'Halcyon Health', program: 'BetterUp Manage™', next: 'May 7 at 3:30 PM', last: '—', active: '106 days ago', modality: 'BetterUp Manage™', avatar: ['#f2a516', '#f8ce62'] },
+  { name: 'Rafa Martino', role: 'Engineer', company: 'Halcyon Health', program: 'BetterUp Manage™', next: 'May 13 at 5:15 PM', last: '—', active: '106 days ago', modality: 'BetterUp Manage™', avatar: ['#12766b', '#3aa693' ] },
+]
+
+/** Header counts. The roster above is the visible page of a longer list, which
+ *  is why the count exceeds its length — same as the reference. */
+export const coachRoster = {
+  total: 17,
+  scopeFilter: 'All members',
+  statusFilter: 'Current members',
+  searchPlaceholder: 'Search by name or company',
+  columns: ['Name', 'Next session', 'Last session', 'Last active', 'Modality'],
+}
+
+export const coachCircles = {
+  filter: 'Current',
+  emptyTitle: "You currently don't have any Coaching Circles or Workshops.",
+}
+
+/** Resources: the coach's own saved lists, then the shared library. */
+export const coachLists = [
+  { name: 'Delegation practice', count: 0 },
+  { name: 'First 90 days', count: 0 },
+  { name: 'Difficult conversations', count: 1 },
+  { name: 'Career growth', count: 0 },
+  { name: 'Meditation', count: 2 },
+  { name: 'Leadership', count: 0 },
+  { name: 'Action items', count: 2 },
+  { name: 'Feedback prep', count: 1 },
+  { name: 'Onboarding reads', count: 1 },
+  { name: 'New list', count: 0 },
+]
+
+export const coachLibrary = {
+  sort: 'Recently created',
+  searchPlaceholder: 'Search resources',
+  filters: [
+    'Previously used', 'Time', 'Type', 'Language', 'Sub-dimensions',
+    'Topics', 'Products', 'Organizations',
+  ],
+  cards: [
+    {
+      title: 'Writing My SFD',
+      kind: 'Reflection',
+      meta: '1 min reflect',
+      hero: 'linear-gradient(120deg,#f2a3c4 0%,#f3ab7e 55%,#ef8a3c 100%)',
+    },
+    {
+      title: 'The 5Cs',
+      kind: 'Reflection',
+      meta: '1 min reflect',
+      hero: 'linear-gradient(100deg,#f6d211 0%,#fbe45e 40%,#e8bd06 100%)',
+    },
+    {
+      title: 'Continue with your BetterUp AI Coach',
+      kind: 'AI Experience',
+      meta: '1 min AI Experience',
+      hero: 'linear-gradient(150deg,#fbd93a 0%,#f7cf2a 45%,#e9c022 100%)',
+    },
+    {
+      title: 'Naming what you want next',
+      kind: 'AI Experience',
+      meta: '1 min AI Experience',
+      hero: 'linear-gradient(150deg,#2b0b12 0%,#8f1420 45%,#e0473a 100%)',
+    },
+  ],
+}
+
+/** The You / insights screen. Every metric is at its zero state, matching a
+ *  coach who hasn't accumulated survey data yet. */
+export const coachInsights = {
+  greeting: `${coachSelf.firstName}, you're just beginning your coaching journey! We can't wait to see the impact you have.`,
+  mpi: {
+    title: 'Member Progress Index',
+    link: 'Learn more about MPI',
+    emptyTitle: 'Not enough data',
+    emptyBody:
+      "We don't have enough data on Member Progress to show you at this time. When enough Members complete the post-session survey, we'll show the results here.",
+  },
+  attendance: {
+    title: 'Session Attendance & Punctuality',
+    body:
+      'Maintaining strong Session Attendance & Punctuality trends is foundational to what it means to deliver a great Coach experience. We want to enable all of our community with data and insights on their activity over time. The below metrics measure how often a Coach no shows, late cancels, or is tardy to their sessions. These metrics are inclusive of all 1:1 Coaching sessions and are updated on the first of every month.',
+    link: 'Learn more about Session Attendance and Punctuality',
+    stats: [
+      { label: 'Total occurrence rate', value: '0.0%' },
+      { label: 'Coach late cancel rate', value: '0.0%' },
+      { label: 'Coach tardiness rate', value: '0.0%' },
+      { label: 'Coach no show rate', value: '0.0%' },
+    ],
+  },
+}
+
+export const coachReplay = {
+  recapTitle: 'Week recap',
+  recapEmpty: 'No week recap available',
+  listTitle: 'Recent Replays',
+  filters: ['All time', 'All members', 'All session types'],
+  empty: 'No more replays available',
+}
+
+/* ---------- coach → member detail ----------
+   The drill-down from the 1:1 roster. Doran is the same person the member
+   experience is built around, so the numbers here are pulled from `strengths`,
+   `growthAreas`, `wellbeing` and `schedule` rather than invented — the coach's
+   view of Doran and Doran's view of herself have to agree.
+   The reference captures were of a QA account with an unfilled program doc;
+   Doran's is written out, since a blank template reads as a bug in a demo. */
+
+export const MEMBER_TABS = [
+  'Summary', 'Sessions', 'Activities', 'Member Insights', 'Assessments',
+  'Messages', 'Notes', 'Programs', 'Goals',
+] as const
+
+export type MemberTab = (typeof MEMBER_TABS)[number]
+
+/** Whole Person bands. Thresholds read off the reference: 71 was a strength,
+ *  56/55/44 emerging, 38/25 a growth area. */
+export const band = (score: number) =>
+  score >= 70 ? 'Strength' : score >= 40 ? 'Emerging strength' : 'Growth area'
+
+export const memberDetail = {
+  name: `${member.firstName} Whitfield`,
+  firstName: member.firstName,
+  role: 'Engineering Manager',
+  company: 'Halcyon Health',
+  timezone: 'San Francisco',
+  language: 'English',
+  ai: 'AI Enabled',
+  /** In the platform right now — same state the roster shows her in. */
+  online: true,
+  lastActive: 'Active now',
+  avatar: ['#f0a41c', '#f9cf68'] as [string, string],
+  programName: 'Halcyon Leaders Track',
+  coachingType: 'Ready coaching',
+  coachingCloud: 'Professional',
+  finalSessionBefore: 'Apr 2, 2030',
+  startDate: 'Feb 9, 2026',
+
+  /** Mirrors `schedule` — the Friday 21 session the member sees on their side. */
+  sessions: {
+    completedAll: 0,
+    completedWithYou: 0,
+    month: 'August 2026',
+    timezone: 'All times in EDT',
+    upcoming: [
+      { day: 21, weekday: 'Friday', time: '1:15 PM - 1:45 PM', label: 'Session 1' },
+    ],
+  },
+
+  /** Derived from `wellbeing`: last check-in July 15, score 100. */
+  readings: {
+    mood: 'No mood logged',
+    who5: 'High',
+    who5Updated: 'Updated 1 month ago',
+  },
+  assessments: [
+    { name: 'Whole Person Report', completed: 'Feb 14, 2026' },
+    { name: 'WHO 5', completed: 'Jul 15, 2026' },
+  ],
+
+  /** Three from `strengths`, three from `growthAreas`, so the coach sees the
+   *  same profile the member does on their Insights screen. */
+  insights: {
+    title: 'You as a whole person',
+    intro:
+      "This report, built on BetterUp's Whole Person™ model, highlights your strengths and growth areas, empowering you to thrive personally and inspire professionally.",
+    asOf: 'Jul 26',
+    picks: ['Recovery', 'Focus', 'Emotional Regulation', 'Purpose', 'Influence', 'Delegation'],
+  },
+
+  /** Written program doc, replacing the reference's unfilled template. */
+  program: {
+    madeFor: 'Halcyon Health',
+    name: 'Halcyon Leaders Track',
+    sections: [
+      {
+        heading: 'Coaching Program',
+        bullets: [
+          'Twelve 1:1 Ready Coaching sessions over six months, scheduled at the member’s pace.',
+          'Unlimited access to the AI coach between sessions, including role play and reflection exercises.',
+          'A Whole Person™ assessment at intake, at the midpoint, and at close.',
+          'Specialist coaching on request — working parents, well-being habits, and navigating grief.',
+        ],
+      },
+      {
+        heading: 'Program Success',
+        bullets: [
+          'Halcyon is promoting engineers into management faster than it can develop them, and wants first-time managers steady inside two quarters.',
+          'Retention in the engineering org is the board-level metric this program is measured against.',
+        ],
+      },
+      {
+        heading: 'What to know going in',
+        bullets: [
+          'Members are mid-level engineering managers, most in their first management role.',
+          'Delegation and boundary-setting are the two themes that come up across the cohort.',
+        ],
+      },
+    ],
+  },
+
+  goals: { goals: [], actions: [] },
+
+  /** One inbound message, sent this morning — which is why she reads as active
+   *  now. Her assessment debrief, so the numbers quoted are the same ones on
+   *  her Member Insights tab. Blank lines separate blocks; the reference renders
+   *  every block at body weight, headings included. */
+  messages: [
+    {
+      from: 'member' as const,
+      at: '08/20/2026 at 11:42 am',
+      body: [
+        "I just finished my Whole Person debrief — here's my profile summary: The Reliable One Who Can't Hand It Over",
+        'Who You Are as a Leader',
+        'Recovery and focus are the two things you never let slip. A perfect recovery score and focus at 93 say you protect your own capacity and cut through noise. Under real pressure you stay level, and emotional regulation at 91 backs that up. People read you as steady, and they are right to.',
+        'Potential Pitfalls',
+        'The strain shows up in what you hand off. Delegation sits at 54 and setting boundaries at 58 — the two lowest scores in your profile. You absorb work rather than distribute it, which protects the quality of what ships and quietly stops your team from stretching. It also means the case you are building for promotion is made almost entirely of work only you can point to.',
+        'Your Growth Opportunities',
+        'Turn the discipline you already apply to your own recovery outward — onto what you let other people own.',
+        'What You Want to Focus On',
+        '🎯 Delegation: Give away one piece of work you are known for, before you feel ready to.\n🎯 Setting Boundaries: Name the limit out loud in the moment, instead of absorbing it and recovering from it later.',
+        'Ways You Learn Best',
+        '✍️ Reflection Activities\n🎧 Audio and Video Content',
+      ],
+    },
+  ],
+}
+
+/** The composer and empty states on the member's Messages tab. */
+export const memberMessaging = {
+  emptyTitle: "It's a little quiet in here!",
+  sendHint: 'Press CMD + ENTER to send',
+  fileHint: 'Max file size is 50MB',
+}

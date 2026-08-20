@@ -29,3 +29,22 @@ export const EXPERIENCE_LABELS: Record<Experience, string> = {
 /** Fixed order, so the account menu lists the two you're NOT in consistently:
  *  member → partner, coach · partner → member, coach · coach → member, partner. */
 export const EXPERIENCE_ORDER: Experience[] = ['member', 'partner', 'coach']
+
+/** The coach shell runs its own screen set — nothing about it lines up with the
+ *  member tabs above, so it gets its own type rather than widening `Tab` and
+ *  breaking the comparison contract. */
+export type CoachTab = 'home' | 'oneToOne' | 'circles' | 'resources' | 'you' | 'replay' | 'ai'
+
+export const COACH_TAB_LABELS: Record<CoachTab, string> = {
+  home: 'Home',
+  oneToOne: '1:1 Coaching',
+  circles: 'Coaching Circles & Workshops',
+  resources: 'Resources',
+  you: 'You',
+  replay: 'Replay',
+  ai: 'AI Coaching',
+}
+
+export const COACH_TAB_ORDER: CoachTab[] = [
+  'home', 'oneToOne', 'circles', 'resources', 'you', 'replay', 'ai',
+]

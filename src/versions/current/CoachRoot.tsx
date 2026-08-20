@@ -1,37 +1,43 @@
-import { GearIcon, HelpIcon } from '../../icons'
-import AccountMenu from './AccountMenu'
+import { useState } from 'react'
+import type { CoachTab, Experience } from '../../nav'
+import type { CoachMember } from '../../data'
+import CoachTopNav from './CoachTopNav'
+import CoachScreen from './screens/coach'
+import MemberDetail from './screens/coach/member'
 
-/** The coach experience. No design yet — this is a landing place so the switch
- *  in the account menu has somewhere to go, and it carries the same account menu
- *  so you can always switch back out. Replace the body when the screens land. */
-export default function CoachRoot({
-  onSwitchExperience, onLogo,
-}: {
-  onSwitchExperience: (e: 'member' | 'partner' | 'coach') => void
+/** The coach experience. Its own nav and its own screen set — nothing here is
+ *  shared with the member tabs, so tab state is local rather than lifted into
+ *  App like the member `tab` is.
+ *
+ *  `openMember` is the 1:1 roster's drill-down. It sits beside the tab rather
+ *  than inside it so leaving the tab clears the member, and coming back to
+ *  1:1 Coaching lands on the list again. */
+export default function CoachRoot({ onSwitchExperience, onLogo }: {
+  onSwitchExperience: (e: Experience) => void
   onLogo: () => void
 }) {
-  return (
-    <div className="p-shell">
-      <header className="p-topbar">
-        <button className="p-logo" onClick={onLogo}>BetterUp</button>
-        <span className="spacer" />
-        <button className="p-icon-btn" aria-label="Settings"><GearIcon /></button>
-        <button className="p-icon-btn" aria-label="Help"><HelpIcon /></button>
-        <AccountMenu experience="coach" onSwitchExperience={onSwitchExperience} />
-      </header>
+  const [tab, setTab] = useState<CoachTab>('home')
+  const [openMember, setOpenMember] = useState<CoachMember | null>(null)
 
-      <div className="p-body">
-        <main className="p-main solo">
-          <p className="p-eyebrow">Coach</p>
-          <h1 className="p-title serif">Coach experience</h1>
-          <p className="p-todo">
-            Not designed yet. The walkthrough lists two features for this persona — AI
-            coaching summaries arriving from the member's AI sessions, and shared context
-            between the human coach and the AI coach. Send the screens over and they go
-            in here.
-          </p>
-        </main>
-      </div>
+  const navigate = (t: CoachTab) => {
+    setOpenMember(null)
+    setTab(t)
+  }
+
+  return (
+    <div className="c-shell">
+      <CoachTopNav
+        tab={tab}
+        onNavigate={navigate}
+        onSwitchExperience={onSwitchExperience}
+        onLogo={onLogo}
+      />
+
+      <main className="c-screen">
+        {openMember
+          ? <MemberDetail member={openMember} onBack={() => setOpenMember(null)} />
+          : <CoachScreen tab={tab} onOpenMember={setOpenMember} />}
+      </main>
     </div>
   )
 }

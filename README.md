@@ -71,9 +71,26 @@ current experience rather than hard-coded, so you can never get stranded in a sh
 can't leave. Both panes always show the same experience, so the comparison never ends up
 straddling two different products.
 
-**Coach has no design yet.** It's a placeholder shell carrying the same top bar and
-account menu, so the switch has somewhere to land. Replace the body in
-`versions/current/CoachRoot.tsx` when the screens arrive.
+The coach side has its own dark full-bleed nav (neither the member's light bar nor the
+partner's floating one), seven top-level screens, and a nine-tab drill-down behind the
+1:1 roster:
+
+| Coach tab | State |
+| --- | --- |
+| **Home** | Greeting, partner-tool links, next-session card, the day's calendar column with a now-marker, and this week's checklist |
+| **1:1 Coaching** | The roster — 17 members, sortable columns, quick actions. Every name opens the member detail |
+| **Coaching Circles & Workshops** | Empty state |
+| **Resources** | Saved lists on the left, the shared library on the right with filters and resource cards |
+| **You** | Coaching impact, Member Progress Index (not enough data), and the four attendance/punctuality rates |
+| **Replay** | Week recap and Recent Replays, both empty. The one coach screen with its own warm gradient canvas |
+| **AI Coaching** | Not designed yet — where the walkthrough's two coach features land |
+
+**The member detail** (`screens/coach/member/`) has all nine sub-tabs: Summary, Sessions,
+Activities, Member Insights, Assessments, Messages, Notes, Programs, Goals. Every roster
+row opens, but only **Doran** has a profile behind her — her numbers are read from
+`strengths` / `growthAreas` / `wellbeing` / `schedule`, the same data the member
+experience renders, so the coach's view of Doran and Doran's view of herself agree.
+Everyone else falls back to empty states, which is what the reference captures showed.
 
 The partner side has a dark floating top bar, a left rail that collapses to icons, and:
 
@@ -200,9 +217,11 @@ src/
     current/               FROZEN baseline — the shipping design
       Root.tsx  TopNav.tsx  AccountMenu.tsx
       PartnerRoot.tsx      the partner/admin shell
-      CoachRoot.tsx        the coach shell (placeholder — no design yet)
+      CoachRoot.tsx        the coach shell + CoachTopNav.tsx
       styles/              one file per shell: member · partner · coach
       screens/             member screens + screens/partner/
+        coach/             the seven coach screens
+          member/          the nine-tab member drill-down
     next/                  the concept we iterate on
       Root.tsx  next.css  screens/
 ```
@@ -229,8 +248,9 @@ Two rules keep the baseline safe:
 - **Put shell styles in the right file.** `versions/current/styles/` holds one file per
   shell (`member.css`, `partner.css`, `coach.css`); anything used by more than one shell
   belongs in `src/styles/primitives.css`. Load order is base → primitives → member →
-  partner → coach → next, and `coach.css` must stay after `partner.css` since the coach
-  shell reuses the partner chrome and only overrides it.
+  partner → coach → next. `coach.css` is self-contained — it used to override
+  `partner.css`, but the coach shell now owns its own chrome, so the two no longer share
+  anything.
 - **Scope every new rule under `.v-next`** in `next.css`. It loads after `theme.css`, so
   it wins on equal specificity, and it can override tokens wholesale
   (`.v-next { --accent: …; --radius: …; }`) without touching the baseline.

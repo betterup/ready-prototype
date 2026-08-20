@@ -213,3 +213,33 @@ export const PersonPairIcon = (p: P) => (
     <path {...s} d="M16 5.4a3.2 3.2 0 0 1 0 6M17.4 14.6c1.8.7 3 2.5 3 4.6" />
   </Svg>
 )
+
+/* ---------- coach shell ---------- */
+
+export const BookIcon = (p: P) => (
+  <Svg {...p}>
+    <path {...s} d="M12 6.4C10.4 5.1 8.4 4.4 6 4.4H3.4v13.4H6c2.4 0 4.4.7 6 2 1.6-1.3 3.6-2 6-2h2.6V4.4H18c-2.4 0-4.4.7-6 2Z" />
+    <path {...s} d="M12 6.4v13.4" />
+  </Svg>
+)
+
+export const BoltIcon = (p: P) => (
+  <Svg {...p}><path {...s} d="M13.4 2.8 5.2 13.4h5.2l-.8 7.8 8.2-10.6h-5.2z" /></Svg>
+)
+
+export const BellIcon = (p: P) => (
+  <Svg {...p}>
+    <path {...s} d="M18.2 16.6V10.6a6.2 6.2 0 0 0-12.4 0v6L4.2 18.4h15.6z" />
+    <path {...s} d="M9.8 21.4a2.4 2.4 0 0 0 4.4 0" />
+  </Svg>
+)
+
+export const ExternalIcon = (p: P) => (
+  <Svg {...p}>
+    <path {...s} d="M13.6 4.4h6v6M19.2 4.8 11 13" />
+    <path {...s} d="M17.6 14v4.8a.8.8 0 0 1-.8.8H5.2a.8.8 0 0 1-.8-.8V7.2a.8.8 0 0 1 .8-.8H10" />
+  </Svg>
+)
+
+export const ArrowUpIcon = (p: P) => <Svg {...p}><path {...s} d="M12 19V5.4M6.6 10.8 12 5.4l5.4 5.4" /></Svg>
+export const ArrowDownIcon = (p: P) => <Svg {...p}><path {...s} d="M12 5v13.6M6.6 13.2 12 18.6l5.4-5.4" /></Svg>

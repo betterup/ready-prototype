@@ -13,12 +13,16 @@ const SWITCH_ICONS: Record<Experience, (p: { className?: string }) => JSX.Elemen
 
 /** Avatar button + dropdown. Shared by all three shells. The switch items are
  *  derived from the current experience, so the menu always offers the other two
- *  and you can never get stranded in a shell you can't leave. */
+ *  and you can never get stranded in a shell you can't leave.
+ *
+ *  `avatar` fills the button. Omitted, you get the member's gradient disc; the
+ *  coach shell passes its own face, since there the account IS the coach. */
 export default function AccountMenu({
-  experience, onSwitchExperience,
+  experience, onSwitchExperience, avatar,
 }: {
   experience: Experience
   onSwitchExperience: (e: Experience) => void
+  avatar?: React.ReactNode
 }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -55,12 +59,14 @@ export default function AccountMenu({
   return (
     <div className="avatar-wrap" ref={ref}>
       <button
-        className="avatar-btn"
+        className={`avatar-btn${avatar ? ' has-face' : ''}`}
         aria-label="Your account"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-      />
+      >
+        {avatar}
+      </button>
       {open && (
         <div className="account-menu" role="menu">
           {items.map(({ label, Icon, action }) => (
