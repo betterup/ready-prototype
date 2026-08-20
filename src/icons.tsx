@@ -243,3 +243,28 @@ export const ExternalIcon = (p: P) => (
 
 export const ArrowUpIcon = (p: P) => <Svg {...p}><path {...s} d="M12 19V5.4M6.6 10.8 12 5.4l5.4 5.4" /></Svg>
 export const ArrowDownIcon = (p: P) => <Svg {...p}><path {...s} d="M12 5v13.6M6.6 13.2 12 18.6l5.4-5.4" /></Svg>
+
+export const FilterIcon = (p: P) => (
+  <Svg {...p}><path {...s} d="M3.6 6.4h16.8M6.4 12h11.2M9.8 17.6h4.4" /></Svg>
+)
+
+export const DownloadIcon = (p: P) => (
+  <Svg {...p}>
+    <path {...s} d="M12 3.8v10.4M7.6 9.8l4.4 4.4 4.4-4.4" />
+    <path {...s} d="M4.4 16.6v2.4a1.2 1.2 0 0 0 1.2 1.2h12.8a1.2 1.2 0 0 0 1.2-1.2v-2.4" />
+  </Svg>
+)
+
+/** The stacked-chevron affordance on a sortable, unsorted column. Distinct from
+ *  ArrowUp/Down, which the coach roster uses to show the ACTIVE sort. */
+export const SortIcon = (p: P) => (
+  <Svg {...p}><path {...s} d="m8 10 4-4 4 4M8 14l4 4 4-4" /></Svg>
+)
+
+/** Filled caret marking the column a table is currently sorted by. */
+export const CaretUp = (p: P) => (
+  <Svg {...p}><path fill="currentColor" d="m12 6.6 6 8.8H6z" /></Svg>
+)
+
+export const CheckIcon = (p: P) => <Svg {...p}><path {...s} d="m4.8 12.6 4.6 4.6 9.8-10.4" /></Svg>
+export const ArrowRight = (p: P) => <Svg {...p}><path {...s} d="M4.6 12h14M13 6.4l5.6 5.6-5.6 5.6" /></Svg>

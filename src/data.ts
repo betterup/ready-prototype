@@ -273,6 +273,110 @@ export const inviteFlow = {
   ],
 }
 
+export type PartnerColumn = {
+  label: string
+  /** Renders the info affordance the reference shows on explained columns. */
+  info?: boolean
+  sortable?: boolean
+  /** The column the table is currently sorted by — gets the filled caret. */
+  sorted?: boolean
+}
+
+export type PartnerMemberRow = {
+  name: string
+  role: string
+  email: string
+  program: string
+  status: string
+  engaged: string
+  sessions: number
+  next: string
+  ends: string
+  access: string
+}
+
+/** Admin > Members. The first four rows are the reference screen verbatim; the
+ *  rest continue the alphabetical page so Status and Next session have live
+ *  values to show, which an all-`Ended` page never would. */
+export const partnerMembers = {
+  eyebrow: 'Admin',
+  title: 'Members',
+  blurb:
+    'Everyone enrolled in a BetterUp program that you manage, past and present. Use this list to track and drive engagement.',
+  updated: 'Data last updated Aug 20, 2026 4:15 PM',
+  total: '2,065',
+  columns: [
+    { label: 'Name', sorted: true },
+    { label: 'Program', info: true },
+    { label: 'Status', info: true },
+    { label: 'Last engaged', info: true, sortable: true },
+    { label: 'Sessions', info: true, sortable: true },
+    { label: 'Next session', info: true, sortable: true },
+    { label: 'End date', info: true, sortable: true },
+    { label: 'Product access' },
+  ] as PartnerColumn[],
+  rows: [
+    { name: 'Aaron Burcham', role: 'Senior Technical Program Manager', email: 'aaron@aaronburcham.com', program: 'BetterUp - Employee - Lead', status: 'Ended', engaged: '05/05/2026', sessions: 14, next: '—', ends: '06/15/2026', access: 'BetterUp Employee Access' },
+    { name: 'Aaron Ervin', role: 'Sr. Enterprise Account Executive', email: 'aaron.ervin@betterup.co', program: 'BetterUp - Employee - Lead', status: 'Ended', engaged: '01/06/2022', sessions: 17, next: '—', ends: '02/15/2022', access: '—' },
+    { name: 'Aaron Falls', role: 'iOS Engineer', email: 'aaron.falls@betterup.co', program: 'BetterUp - Employee - Lead', status: 'Ended', engaged: '05/12/2021', sessions: 8, next: '—', ends: '02/15/2022', access: '—' },
+    { name: 'Aaron Scales', role: 'Principal Product Manager', email: 'maxwell.scales@gmail.com', program: 'BetterUp - Employee - Lead', status: 'Ended', engaged: '02/20/2026', sessions: 17, next: '—', ends: '02/24/2026', access: 'BetterUp Employee Access' },
+    { name: 'Abigail Nwosu', role: 'Director of Customer Success', email: 'abigail.nwosu@howdendemo.com', program: 'BetterUp - Employee - Ready', status: 'Active', engaged: '08/19/2026', sessions: 6, next: '08/24/2026', ends: '12/31/2026', access: 'BetterUp Employee Access' },
+    { name: 'Adaora Eze', role: 'Regional Operations Manager', email: 'adaora.eze@howdendemo.com', program: 'BetterUp - Employee - Ready', status: 'Not started', engaged: '—', sessions: 0, next: '—', ends: '12/31/2026', access: 'BetterUp Employee Access' },
+    { name: 'Adam Reinholt', role: 'Staff Data Scientist', email: 'adam.reinholt@howdendemo.com', program: 'BetterUp - Employee - Lead', status: 'Active', engaged: '08/18/2026', sessions: 11, next: '08/26/2026', ends: '12/31/2026', access: 'BetterUp Employee Access' },
+    { name: 'Adrian Kowalski', role: 'Senior Underwriter', email: 'adrian.kowalski@howdendemo.com', program: 'BetterUp - Employee - Ready', status: 'Active', engaged: '08/15/2026', sessions: 3, next: '09/02/2026', ends: '12/31/2026', access: '—' },
+  ] as PartnerMemberRow[],
+}
+
+/** Admin > Scheduled invitations. One pending send, matching the reference. */
+export const scheduledInvitations = {
+  eyebrow: 'Admin',
+  title: 'Scheduled invitations',
+  send: {
+    date: 'Aug 21, 2026',
+    time: '4:16 PM EDT',
+    members: '1 member',
+    track: 'Test PR link',
+    program: 'BetterUp Grow\u2122 (AI Coach) from 8/20/2026 - 2/20/2027',
+    createdBy: 'Created by Your BetterUp account team on Aug 20, 2026 at 4:17 PM EDT',
+    cancel: 'Cancel send',
+  },
+  promo: {
+    title: 'Ready to invite more members?',
+    body: 'Plan the launch of your next program, or add members to start today.',
+    link: 'Schedule invitations',
+  },
+  pending: {
+    title: 'Pending access',
+    /** Split so `Invite members` can render bold, as in the reference. */
+    blurbBefore:
+      'Take a moment to review your upcoming invitations. If you need to update any, select the employees and cancel their existing invites. You can then resend with updated details by clicking ',
+    blurbBold: 'Invite members',
+    unit: 'employee',
+    total: 1,
+    columns: [
+      { label: 'Name', sorted: true },
+      { label: 'Track', info: true },
+      { label: 'Access' },
+      { label: 'Send date', sortable: true },
+    ] as PartnerColumn[],
+    rows: [
+      {
+        email: 'rachel.cooper+820_2@betterup.co',
+        track: 'Test PR link',
+        access: 'BetterUp Grow\u2122 (AI Coach)',
+        sent: '8/21/2026',
+        avatar: ['#1d4ed8', '#60a5fa'] as [string, string],
+      },
+    ],
+  },
+}
+
+/** Shared by both admin tables. */
+export const partnerTable = {
+  filterLabel: 'Filter by program or employee attributes',
+  searchPlaceholder: 'Search by name or email',
+}
+
 /** Open slots the in-chat scheduler offers. Deliberately later than the
  *  Friday 21 session already on the Schedule screen. */
 export const coachAvailability = {

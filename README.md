@@ -92,13 +92,26 @@ row opens, but only **Doran** has a profile behind her — her numbers are read 
 experience renders, so the coach's view of Doran and Doran's view of herself agree.
 Everyone else falls back to empty states, which is what the reference captures showed.
 
-The partner side has a dark floating top bar, a left rail that collapses to icons, and:
+The partner side has a dark floating top bar and a left rail that **starts collapsed** —
+the admin screens are wide tables, so the rail earns its width only once you go looking
+for it. Switching into the experience lands on Home, the same as the member side.
 
 | Rail destination | State |
 | --- | --- |
 | **Home** | Welcome header + three reporting-insight cards (including the 0% engagement ring) |
-| **Admin → Invite members** | The 4-step Invite to BetterUp flow — the entry point when you switch experiences |
+| **Admin → Members** | The full roster table: select-all and per-row checkboxes, sorted-by-Name header, Generate CSV, Invite |
+| **Admin → Invite members** | The 4-step Invite to BetterUp flow |
+| **Admin → Scheduled invitations** | The pending send card with Cancel send, the invite-more promo, and the Pending access table |
 | Everything else | Placeholder; those screens aren't designed yet |
+
+Members and Scheduled invitations share their filter row, header cells, and checkbox
+selection via `screens/partner/table.tsx` — the two differ only in columns and cells.
+Both tables carry a `min-width` and scroll horizontally rather than crushing their
+columns to fit a half-width comparison pane.
+
+The first four Members rows are the reference screen verbatim; the rest continue the
+alphabetical page so `Status` and `Next session` have live values to show, which an
+all-`Ended` page never would.
 
 The invite flow's step 1 is fully built: paste addresses, Continue enables once at least
 one parses, and advancing unlocks step 2. Steps 2–4 are locked headers matching their
@@ -127,8 +140,10 @@ Six member screens behind the real top nav, all reachable by clicking:
   item click; subtle grey backfill on hover
 - **Switch between member / partner / coach experiences** from that dropdown, in both
   panes at once
-- Partner rail: collapse to icons, expandable Analytics and Admin groups, working
-  navigation between Home and Invite members
+- Partner rail: starts collapsed, expandable Analytics and Admin groups, working
+  navigation between Home, Members, Invite members, and Scheduled invitations
+- Admin tables: select-all and per-row checkboxes, row selection highlight, and an
+  Invite button that drops you into the invite flow
 - Insights: **Strengths / Growth Areas** toggle swaps the eight report cards
 - Discover: focus-area carousel arrows, article bookmark toggle
 - AI Coaching: **a real back-and-forth conversation** (see below), left panel collapse/expand,

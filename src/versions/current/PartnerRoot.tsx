@@ -7,6 +7,8 @@ import {
 import AccountMenu from './AccountMenu'
 import Invite from './screens/partner/Invite'
 import PartnerHomeScreen from './screens/partner/Home'
+import Members from './screens/partner/Members'
+import Scheduled from './screens/partner/Scheduled'
 
 const RAIL_ICONS: Record<string, (p: { className?: string }) => JSX.Element> = {
   home: HomeIcon,
@@ -15,15 +17,32 @@ const RAIL_ICONS: Record<string, (p: { className?: string }) => JSX.Element> = {
 }
 
 /** Rail destinations that have a screen. Everything else is a placeholder. */
-type Dest = 'home' | 'invite' | string
+type Dest = 'home' | 'invite' | 'members' | 'scheduled' | string
+
+/** Rail leaves whose label doesn't match its destination id. */
+const LEAF_DEST: Record<string, Dest> = {
+  Members: 'members',
+  'Invite members': 'invite',
+  'Scheduled invitations': 'scheduled',
+}
+
+const BUILT: Dest[] = ['home', 'invite', 'members', 'scheduled']
+
+/** Groups that show no icon beside their label in the EXPANDED rail. The
+ *  collapsed rail is icon-only, so it still uses RAIL_ICONS for these. */
+const NO_LABEL_ICON = ['admin']
 
 export default function PartnerRoot({ onSwitchExperience, onLogo }: {
   onSwitchExperience: (e: 'member' | 'partner' | 'coach') => void
   onLogo: () => void
 }) {
-  const [expanded, setExpanded] = useState(true)
+  // Collapsed on landing: the admin screens are wide tables, so the rail earns
+  // its width only once you go looking for it.
+  const [expanded, setExpanded] = useState(false)
   const [openGroups, setOpenGroups] = useState<string[]>(['analytics', 'admin'])
-  const [dest, setDest] = useState<Dest>('invite')
+  // Switching into the partner experience remounts this shell, so the initial
+  // dest is also the landing screen — Home, same as the member experience.
+  const [dest, setDest] = useState<Dest>('home')
 
   const toggleGroup = (id: string) =>
     setOpenGroups((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]))
@@ -35,8 +54,7 @@ export default function PartnerRoot({ onSwitchExperience, onLogo }: {
     setOpenGroups((g) => (g.includes(id) ? g : [...g, id]))
   }
 
-  const leafDest = (label: string): Dest =>
-    label === 'Invite members' ? 'invite' : label
+  const leafDest = (label: string): Dest => LEAF_DEST[label] ?? label
 
   return (
     <div className="p-shell">
@@ -98,7 +116,7 @@ export default function PartnerRoot({ onSwitchExperience, onLogo }: {
                   aria-expanded={groupOpen}
                   onClick={() => toggleGroup(entry.id)}
                 >
-                  <Icon />
+                  {!NO_LABEL_ICON.includes(entry.id) && <Icon />}
                   {entry.label}
                   <span className="spacer" />
                   {groupOpen ? <ChevronUp /> : <ChevronDown />}
@@ -128,7 +146,9 @@ export default function PartnerRoot({ onSwitchExperience, onLogo }: {
         <main className="p-main">
           {dest === 'home' && <PartnerHomeScreen />}
           {dest === 'invite' && <Invite />}
-          {dest !== 'home' && dest !== 'invite' && (
+          {dest === 'members' && <Members onInvite={() => setDest('invite')} />}
+          {dest === 'scheduled' && <Scheduled onInvite={() => setDest('invite')} />}
+          {!BUILT.includes(dest) && (
             <>
               <p className="p-eyebrow">Admin</p>
               <h1 className="p-title serif">{dest}</h1>
