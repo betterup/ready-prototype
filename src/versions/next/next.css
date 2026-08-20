@@ -1,7 +1,7 @@
 /* ============================================================
    BetterUp Ready — NEXT version (the concept we iterate on).
    Every rule here MUST be scoped under `.v-next` so the frozen
-   baseline in ../current/theme.css is never affected. Tokens can
+   baseline in ../current/styles/ is never affected. Tokens can
    be overridden wholesale, e.g.:
 
      .v-next {
@@ -9,7 +9,8 @@
        --radius: 20px;
      }
 
-   Loaded after theme.css, so `.v-next` rules win on equal specificity.
+   Loaded after the current shells' styles, so `.v-next` rules win on
+   equal specificity.
    ============================================================ */
 
 .v-next {

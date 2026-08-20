@@ -193,11 +193,15 @@ src/
   icons.tsx                inline line-icon set
   coach/                   the scripted coach + the seam for a real model
     engine.ts  provider.ts  seed.ts  Scheduler.tsx  types.ts
+  styles/
+    base.css               reset, element defaults, display face
+    primitives.css         shared UI primitives + the account dropdown
   versions/
     current/               FROZEN baseline — the shipping design
-      Root.tsx  TopNav.tsx  AccountMenu.tsx  theme.css
+      Root.tsx  TopNav.tsx  AccountMenu.tsx
       PartnerRoot.tsx      the partner/admin shell
       CoachRoot.tsx        the coach shell (placeholder — no design yet)
+      styles/              one file per shell: member · partner · coach
       screens/             member screens + screens/partner/
     next/                  the concept we iterate on
       Root.tsx  next.css  screens/
@@ -222,6 +226,11 @@ Two rules keep the baseline safe:
   avatar opens an account dropdown; and Home's cards use a solid white border instead of
   the product's 75%-opacity one. Anything that should differ *between* the two sides
   belongs in `next/`.
+- **Put shell styles in the right file.** `versions/current/styles/` holds one file per
+  shell (`member.css`, `partner.css`, `coach.css`); anything used by more than one shell
+  belongs in `src/styles/primitives.css`. Load order is base → primitives → member →
+  partner → coach → next, and `coach.css` must stay after `partner.css` since the coach
+  shell reuses the partner chrome and only overrides it.
 - **Scope every new rule under `.v-next`** in `next.css`. It loads after `theme.css`, so
   it wins on equal specificity, and it can override tokens wholesale
   (`.v-next { --accent: …; --radius: …; }`) without touching the baseline.

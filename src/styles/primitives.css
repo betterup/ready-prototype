@@ -1,0 +1,122 @@
+/* ============================================================
+   Shared primitives — used by more than one shell, so they
+   cannot live in any single one of them.
+
+   The account dropdown is here because all three shells hang it off their
+   own top bar (member nav, partner dark bar, coach dark bar).
+   ============================================================ */
+/* Account dropdown. Hangs off the nav's bottom edge, right-aligned to the
+   avatar. Lives inside the nav so each version's chrome owns its own menu. */
+.avatar-wrap { position: relative; display: flex; }
+
+.account-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  z-index: 50;
+  width: 360px;
+  overflow: hidden;
+  background: var(--card);
+  /* Set explicitly, not inherited: this menu also hangs off the partner's dark
+     top bar, which sets color: #fff — that made it white-on-white there. */
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 8px 28px rgba(26, 26, 36, 0.14);
+}
+
+.account-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  height: 50px;
+  padding: 0 24px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  font-size: 16px;
+  text-align: left;
+}
+.account-item:last-child { border-bottom: none; }
+.account-item:hover { background: #f4f4f6; }
+.account-item:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.account-item svg { width: 21px; height: 21px; }
+
+
+/* ---------- generic bits ---------- */
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.section-head h2 { font-size: 25px; font-weight: 600; letter-spacing: -0.015em; }
+.section-head .spacer { flex: 1; }
+
+.carousel-arrows { display: flex; gap: 10px; }
+.arrow {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: none; border-radius: 50%;
+  background: #ececee;
+  color: var(--ink);
+}
+.arrow:hover { background: #e0e0e3; }
+.arrow:disabled { color: var(--ink3); cursor: default; }
+.arrow svg { width: 17px; height: 17px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: var(--pill);
+  border: 1.5px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.btn.primary { background: var(--accent); color: #fff; }
+.btn.primary:hover { background: var(--accent-hover); }
+.btn.ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+.btn.ghost:hover { background: rgba(26, 26, 36, 0.05); }
+.btn.sm { height: 40px; padding: 0 20px; font-size: 14px; }
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.muted { color: var(--ink2); }
+
+.textlink {
+  border: none; background: none; padding: 0;
+  font-weight: 600; text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* illustration blobs stand in for the product's spot illustrations */
+.blob {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 26px;
+  line-height: 1;
+  flex: none;
+}

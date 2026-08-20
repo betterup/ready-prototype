@@ -1,0 +1,7 @@
+/* ============================================================
+   COACH shell — borrows the partner chrome wholesale, so this is
+   only the handful of overrides that differ. Must load after partner.css.
+   ============================================================ */
+/* No rail alongside it, so give the column its own gutter. */
+.p-main.solo { max-width: 720px; padding: 8px 22px 80px; }
+.p-main.solo .p-todo { margin-top: -18px; font-size: 16px; }

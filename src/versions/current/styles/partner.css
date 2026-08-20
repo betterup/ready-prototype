@@ -1,0 +1,275 @@
+/* ============================================================
+   PARTNER / ADMIN shell — dark floating top bar, collapsible
+   rail, Invite flow, partner Home.
+
+   The coach shell reuses this chrome (.p-shell / .p-topbar / .p-main), so
+   changes here affect it too. Coach-only overrides are in coach.css.
+   ============================================================ */
+/* ---------- PARTNER / ADMIN EXPERIENCE ---------- */
+
+.p-shell {
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--canvas);
+}
+
+.p-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 76px;
+  padding: 0 30px;
+  border-radius: 14px;
+  background: #2a2533;
+  color: #fff;
+  flex: none;
+}
+.p-topbar .spacer { flex: 1; }
+.p-logo { font-size: 25px; font-weight: 800; letter-spacing: -0.035em; border: none; background: none; padding: 0; color: inherit; }
+
+.p-icon-btn {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border: none; border-radius: 50%;
+  background: none;
+  color: rgba(255, 255, 255, 0.9);
+}
+.p-icon-btn:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.p-icon-btn svg { width: 22px; height: 22px; }
+
+/* The dropdown hangs off a 76px bar rather than the member nav's 72px. */
+.p-topbar .account-menu { top: calc(100% + 17px); }
+
+.p-body { flex: 1; display: flex; gap: 22px; min-height: 0; }
+
+.p-rail {
+  width: 84px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  align-self: flex-start;
+}
+.p-rail.wide {
+  width: 290px;
+  align-items: stretch;
+  gap: 4px;
+  padding: 16px 14px 26px;
+}
+
+.p-rail-toggle {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: none; border-radius: 9px;
+  background: none;
+  color: var(--ink2);
+  margin-bottom: 8px;
+  flex: none;
+}
+.p-rail.wide .p-rail-toggle { align-self: flex-end; }
+.p-rail-toggle:hover { background: #f1f1f4; color: var(--ink); }
+.p-rail-toggle svg { width: 20px; height: 20px; }
+
+.p-rail-btn {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border: none; border-radius: 11px;
+  background: none;
+  color: var(--ink);
+}
+.p-rail-btn:hover { background: #f1f1f4; }
+.p-rail-btn svg { width: 23px; height: 23px; }
+.p-rail-btn.on { background: #e6edfd; color: #2f6bea; }
+
+/* ---- expanded rail ---- */
+
+.p-nav-group { display: flex; flex-direction: column; }
+
+.p-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  font-size: 16px;
+  text-align: left;
+  color: var(--ink);
+}
+.p-nav-item .spacer { flex: 1; }
+.p-nav-item:hover { background: #f4f4f6; }
+.p-nav-item svg { width: 21px; height: 21px; flex: none; }
+.p-nav-item.on { background: #eaf1fd; color: #2f6bea; }
+
+.p-nav-sub { display: flex; flex-direction: column; padding: 2px 0 6px; }
+
+.p-nav-label {
+  margin: 12px 0 6px;
+  padding: 0 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.p-nav-divider { border: none; border-top: 1px solid var(--border); margin: 12px 14px 0; }
+
+.p-nav-leaf {
+  padding: 10px 14px 10px 34px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  font-size: 15.5px;
+  text-align: left;
+  color: var(--ink);
+}
+.p-nav-leaf:hover { background: #f4f4f6; }
+.p-nav-leaf.on { background: #eaf1fd; color: #2f6bea; font-weight: 600; }
+
+/* ---- partner home ---- */
+
+.p-greeting { font-size: 40px; margin-bottom: 26px; }
+.p-rule { border: none; border-top: 1px solid var(--border); margin: 0 0 34px; }
+.p-section { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+
+.p-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  max-width: 1180px;
+}
+
+.p-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.p-card-hero {
+  height: 240px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.p-ring { width: 140px; height: 140px; }
+
+.p-card-body { padding: 24px 26px 22px; flex: 1; }
+.p-card-body h3 { font-size: 25px; font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
+.p-card-body p { margin: 14px 0 0; font-size: 15px; line-height: 1.5; color: #2c2c36; }
+
+.p-card-foot { padding: 0 26px 22px; }
+.p-card-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 0 0;
+  border: none; border-top: 1px solid var(--border);
+  width: 100%;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+}
+.p-card-link:hover { color: var(--accent); }
+
+.p-main {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0 80px;
+}
+
+.p-eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink2);
+}
+.p-title { font-size: 46px; margin-bottom: 44px; }
+
+.p-steps { display: flex; flex-direction: column; gap: 22px; max-width: 710px; }
+
+.p-step {
+  border-radius: var(--radius);
+  background: #f1f1f3;
+  border: 1px solid transparent;
+}
+.p-step.open {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.p-step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 24px 28px;
+  border: none;
+  background: none;
+  text-align: left;
+  color: var(--ink3);
+}
+.p-step.open .p-step-head { color: var(--ink); }
+.p-step-head:disabled { cursor: default; }
+.p-step-head svg { width: 22px; height: 22px; margin-left: auto; }
+
+.p-step-title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.p-step-done { font-size: 14px; font-weight: 600; color: var(--ink2); }
+
+.p-step-body { padding: 0 28px 28px; }
+.p-step.open .p-step-body { border-top: 1px solid var(--border); padding-top: 24px; margin-top: -4px; }
+
+.p-field-label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.p-textarea {
+  width: 100%;
+  min-height: 116px;
+  padding: 14px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.p-textarea::placeholder { color: var(--ink3); }
+.p-textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.p-step-foot { display: flex; justify-content: flex-end; margin-top: 22px; }
+
+.p-continue {
+  height: 56px;
+  padding: 0 34px;
+  border: none;
+  border-radius: var(--pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+.p-continue:hover { background: var(--accent-hover); }
+.p-continue:disabled {
+  background: #f1f1f3;
+  color: var(--ink3);
+  cursor: default;
+}
+
+.p-todo { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink2); }

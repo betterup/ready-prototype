@@ -1,0 +1,26 @@
+/* ============================================================
+   Base layer — reset, element defaults, display face.
+   Loaded first, before any shell. Tokens live in ../tokens.css.
+   ============================================================ */
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; }
+input, textarea { font: inherit; color: inherit; }
+
+/* Icons default to a text-adjacent size; charts opt out via their own class. */
+svg { width: 20px; height: 20px; flex: none; }
+.ic { width: 17px; height: 17px; }
+
+h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+
+.serif { font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em; font-optical-sizing: auto; }
