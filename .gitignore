@@ -10,3 +10,7 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# Local editor/harness config. launch.json points the preview at the dev
+# server, but the port is a local choice — keep it out of the repo.
+.claude/
