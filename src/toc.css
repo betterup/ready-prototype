@@ -1,0 +1,155 @@
+/* ============================================================
+   Table of contents — presentation chrome for the walkthrough.
+   BetterUp visual system: warm gradient canvas, serif display
+   headings, white cards at 12px radius, raspberry accent.
+   ============================================================ */
+
+.toc {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow-y: auto;
+  background:
+    radial-gradient(110% 80% at 6% 0%, #fde3e0 0%, rgba(253, 227, 224, 0) 55%),
+    radial-gradient(120% 100% at 100% 100%, #d9b8f2 0%, rgba(217, 184, 242, 0) 58%),
+    linear-gradient(160deg, #fcebe8 0%, #fdf2e7 42%, #f5e1f6 74%, #e8cef5 100%);
+}
+
+.toc-top {
+  display: flex;
+  align-items: center;
+  padding: 22px 44px;
+}
+.toc-top .spacer { flex: 1; }
+
+.toc-close {
+  height: 42px;
+  padding: 0 22px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--pill);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 600;
+}
+.toc-close:hover { background: #fff; }
+
+.toc-body {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 30px 44px 110px;
+}
+
+.toc-eyebrow {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.toc-title { font-size: 54px; margin-bottom: 16px; }
+
+.toc-sub {
+  margin: 0 0 22px;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: #35353f;
+  max-width: 560px;
+}
+
+.toc-legend { display: flex; gap: 10px; margin-bottom: 44px; }
+
+.toc-sections { display: flex; flex-direction: column; gap: 26px; }
+
+.toc-card {
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid #fff;
+  border-radius: var(--radius-lg);
+  padding: 30px 34px 22px;
+  box-shadow: 0 1px 3px rgba(120, 80, 110, 0.06);
+}
+
+.toc-card h2 { font-size: 28px; letter-spacing: -0.01em; }
+.toc-blurb { margin: 6px 0 18px; font-size: 14.5px; color: var(--ink2); }
+
+.toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+.toc-list li { counter-increment: toc; }
+.toc-list li + li { border-top: 1px solid rgba(26, 26, 36, 0.08); }
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 10px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+}
+.toc-item::before {
+  content: counter(toc);
+  width: 26px;
+  flex: none;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--ink3);
+  text-align: right;
+}
+
+.toc-item.linked:hover { background: rgba(255, 255, 255, 0.85); }
+.toc-item.linked:hover .toc-go { transform: translateX(3px); }
+.toc-item.linked:hover .toc-item-title { color: var(--accent); }
+
+.toc-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.toc-item-title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.toc-item-note { font-size: 13.5px; color: var(--ink2); }
+
+.toc-go { width: 19px; height: 19px; flex: none; color: var(--ink2); transition: transform 0.15s ease; }
+
+.toc-item.unbuilt { cursor: default; }
+.toc-item.unbuilt .toc-item-title { color: var(--ink3); font-weight: 500; }
+.toc-item.unbuilt::before { color: rgba(26, 26, 36, 0.25); }
+
+.toc-soon {
+  flex: none;
+  padding: 4px 12px;
+  border-radius: var(--pill);
+  border: 1px dashed var(--border2);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+/* ---- pillar tags ---- */
+
+.pillar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: var(--pill);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pillar-braid        { background: #fce4ee; color: #b0074a; }
+.pillar-icspecific   { background: #e2ecfb; color: #2456c4; }
+.pillar-scalable     { background: #dcefe3; color: #17804a; }
+.pillar-configurable { background: #f6ecd2; color: #8a5f14; }
+
+/* Fixed width so titles align down the list regardless of tag text. */
+.toc-item .pillar { width: 118px; justify-content: center; }

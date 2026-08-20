@@ -1,0 +1,149 @@
+/* ============================================================
+   Comparison harness. Chrome that belongs to neither version —
+   deliberately neutral so it doesn't read as part of the product.
+   ============================================================ */
+
+/* Both panes occupy the same grid cell, so the host takes the height of the
+   taller version and a single document scrollbar moves both in lockstep at
+   matching pixel offsets. */
+.compare {
+  display: grid;
+  grid-template-columns: 100%;
+  /* Items stretch (no align-items: start) so both panes are the full row
+     height. Combined with the opaque background below, that stops the
+     underlying version showing through wherever a screen has no background of
+     its own — .page is transparent, so without this the concept pane bleeds
+     through the current pane in Current mode. */
+}
+
+/* `isolation` is load-bearing, not decoration. clip-path already makes
+   .pane-current a stacking context, which scopes its sticky nav's z-index
+   inside it. Without a matching stacking context on .pane-next, THAT nav's
+   z-index escapes to the root and paints above BOTH halves — so the left side
+   would show the wrong version's chrome the moment the two navs differ.
+   Isolating both panes keeps each version's z-indexes internal and makes
+   paint order pure DOM order. */
+.pane {
+  grid-area: 1 / 1;
+  min-width: 0;
+  background: var(--canvas);
+  /* Always cover the viewport, even on short screens like Schedule, so the
+     opaque background actually covers the pane beneath it. */
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* The `current` layer paints last (DOM order) and is clipped from the right. */
+.pane-current {
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+/* Viewport-anchored so the handle stays reachable no matter how far you've
+   scrolled down a long screen like Insights. */
+.compare-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--reveal);
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(26, 26, 36, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+/* The row's box is exactly the handle, so it centres on the divider no matter
+   how wide the labels are. Labels hang off either side, absolutely positioned,
+   so they can never drag the handle off the seam. */
+.handle-row {
+  position: absolute;
+  top: 50%;
+  left: var(--reveal);
+  width: 52px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+}
+
+.handle {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid rgba(26, 26, 36, 0.85);
+  border-radius: 50%;
+  background: #fff;
+  color: #1a1a24;
+  box-shadow: 0 2px 10px rgba(26, 26, 36, 0.22);
+  pointer-events: auto;
+  touch-action: none;
+  cursor: ew-resize;
+}
+.handle svg { width: 26px; height: 26px; }
+.handle:hover { background: #f4f4f6; }
+.handle:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.compare[data-dragging] .handle { background: #f4f4f6; }
+.compare[data-dragging] { cursor: ew-resize; user-select: none; }
+
+.edge-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.14s ease;
+  padding: 5px 12px;
+  border-radius: var(--pill);
+  background: rgba(26, 26, 36, 0.85);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+}
+.edge-label.left { right: calc(100% + 12px); }
+.edge-label.right { left: calc(100% + 12px); }
+
+/* Each label hides when its side gets too narrow to caption. Driven from React
+   rather than CSS math: clamp() can't mix unitless bounds with a percentage. */
+.handle-row[data-hide-left] .edge-label.left,
+.handle-row[data-hide-right] .edge-label.right { opacity: 0; }
+
+/* ---------- mode toolbar ---------- */
+
+.modebar {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: var(--pill);
+  background: rgba(20, 20, 28, 0.9);
+  box-shadow: 0 6px 24px rgba(26, 26, 36, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.modebar button {
+  height: 34px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--pill);
+  background: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 600;
+}
+.modebar button:hover { color: #fff; }
+.modebar button[aria-pressed='true'] { background: #fff; color: #1a1a24; }
+

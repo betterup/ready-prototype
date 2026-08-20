@@ -1,0 +1,147 @@
+/* ============================================================
+   BetterUp Ready — NEXT version (the concept we iterate on).
+   Every rule here MUST be scoped under `.v-next` so the frozen
+   baseline in ../current/theme.css is never affected. Tokens can
+   be overridden wholesale, e.g.:
+
+     .v-next {
+       --accent: #6b3ce0;
+       --radius: 20px;
+     }
+
+   Loaded after theme.css, so `.v-next` rules win on equal specificity.
+   ============================================================ */
+
+.v-next {
+  /* no token overrides yet */
+}
+
+/* ---------- Home: coach-recommended role play ----------
+   Replaces the Personal Concierge card. Same .home-card frame as its
+   neighbours (so the stack still reads as one list), tinted to sit forward of
+   them, with a solid CTA since this card asks for a specific action. */
+
+.v-next .rec-card {
+  /* Locked to the baseline card's height so cards 2-3 line up across the seam.
+     This card carries one more text row than its neighbours, so it buys the
+     room back with tighter padding and a slightly denser type stack rather
+     than growing. This is only a floor: useRowSync measures both sides at the
+     current width and pins each pair to the taller, which is what actually
+     guarantees alignment once the two cards' copy wraps differently. */
+  min-height: var(--home-card1-h);
+  padding-top: 16px;
+  padding-bottom: 16px;
+  gap: 28px;
+  background:
+    linear-gradient(102deg, rgba(255, 255, 255, 0.74) 0%, rgba(252, 228, 236, 0.66) 100%);
+  /* No border override: inherits .home-card's solid white so all three cards in
+     the stack match. The tint alone distinguishes this card. */
+}
+
+.v-next .rec-thumb {
+  /* Fills the card's inner height instead of being fixed, so it stays
+     proportional now that the card height is pinned. */
+  align-self: stretch;
+  width: 124px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(253, 236, 240, 0.9);
+}
+
+.v-next .rec-avatar {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #b4b4b6;
+  font-size: 38px;
+  line-height: 1;
+}
+
+.v-next .rec-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 25px;
+  padding: 0 13px;
+  border: 1px solid var(--border2);
+  border-radius: var(--pill);
+  background: rgba(255, 255, 255, 0.86);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.v-next .rec-card h3 {
+  margin: 9px 0 5px;
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.v-next .rec-card .rec-why {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.35;
+  color: #35353f;
+}
+
+.v-next .rec-card .rec-quote {
+  margin: 0;
+  font-size: 14.5px;
+  font-style: italic;
+  line-height: 1.45;
+  color: #35353f;
+}
+
+.v-next .rec-cta {
+  flex: none;
+  gap: 10px;
+  padding: 0 30px;
+}
+.v-next .rec-cta svg { width: 19px; height: 19px; }
+
+/* Marker for screens that haven't been redesigned yet. Fixed to the viewport
+   bottom-right: on the concept side of a 50/50 split so it's actually visible,
+   clear of both the top-right page actions and the centred mode toolbar. It
+   paints inside the next pane's stacking context, so the current pane correctly
+   covers it in Current mode. */
+.not-yet {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 5;
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: var(--pill);
+  background: rgba(26, 26, 36, 0.72);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.v-next .screen { position: relative; }
+
+/* Nothing to caption when the concept isn't on screen at all. */
+.compare[data-mode='current'] .not-yet { display: none; }
+
+/* ---------- Schedule: session allowance ----------
+   Same treatment as the Insights subtitle (15.5px, --ink2 via .muted). The
+   header's bottom margin tightens to absorb most of the added line, so the
+   content below stays close to where it sits on the current side. */
+
+/* Top-align both the title block and the button so the h1 and New session
+   button land on exactly the same baseline as the current side. The header's
+   bottom margin (19.5px vs the baseline's 46px) absorbs the added line, so the
+   meta row and session card below stay pixel-aligned across the seam. */
+.v-next .sched-head { align-items: flex-start; margin-bottom: 19.5px; }
+.v-next .sched-new { align-self: flex-start; }
+.v-next .sched-sub { margin: 8px 0 0; font-size: 15.5px; }

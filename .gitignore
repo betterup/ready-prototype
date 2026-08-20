@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local environment. .env.example IS committed on purpose — it is all comments
+# and documents the coach-proxy contract. Never put a real key in src/ or in a
+# VITE_* variable: Vite inlines those into the client bundle.
+.env
+.env.local
+.env.*.local
