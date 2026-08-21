@@ -117,8 +117,35 @@ The invite flow's step 1 is fully built: paste addresses, Continue enables once 
 one parses, and advancing unlocks step 2. Steps 2–4 are locked headers matching their
 greyed-out state in the reference, since we don't have those designs.
 
-The concept side reuses the current partner shell for now — same fallback idea as the
-member screens, so it's one fork away from diverging.
+The concept side now runs its **own** partner shell, `versions/next/PartnerRoot.tsx`.
+It's a fork of the current one that still imports every screen we haven't redesigned,
+so the file holds only the differences — today that's one rail leaf:
+
+| Concept-only destination | State |
+| --- | --- |
+| **Admin → Upgrade members** | Sits below Invite members. A three-step nudge composer: pick a saved filter, write the message, review and send |
+
+The nudge composer reuses the invite flow's accordion shell (`p-step*`) so the two admin
+wizards read as one pattern; everything inside a step is new and scoped under `.v-next`
+in `next.css`. Step 1 is a multi-select Audience dropdown — tick any of the nine
+groupings; the field names the first two and tallies the rest, and the menu stays open
+while you tick. The top four rows carry a sparkle: they're
+AI-generated rather than built from employee attributes, and hovering (or tabbing to)
+the sparkle explains what the generation looked at. The sparkle is what marks every
+generated grouping we add — `ai` and `tip` on the option in `data.ts` are all it takes. Step 2 writes subject and message with live character counts,
+personalisation tokens that append to the draft, and the channel picker (Slack greyed
+out — not connected in this org). Step 3 reviews the live state and picks send-now vs
+schedule. Send nudge sits outside the accordion, since it
+belongs to the whole nudge rather than to step 3.
+
+Partner page headers run **one** size on both sides — the old 46px title and 40px Home
+greeting both dwarfed the 20px step headers under them, so `.p-title` and `.p-greeting`
+are 34px in `partner.css`.
+
+Its rail comes from `partnerNavNext`, which is *derived* from `partnerNav` rather than
+copied, so anything added to the shared rail still reaches the concept. Changes meant
+for the concept alone belong in that fork; anything edited under `versions/current/`
+shows up on both sides of the seam.
 
 ## What's here
 
@@ -140,7 +167,7 @@ Six member screens behind the real top nav, all reachable by clicking:
   item click; subtle grey backfill on hover
 - **Switch between member / partner / coach experiences** from that dropdown, in both
   panes at once
-- Partner rail: starts collapsed, expandable Analytics and Admin groups, working
+- Partner rail: starts collapsed; expanding it opens on Admin, with Analytics folded away; working
   navigation between Home, Members, Invite members, and Scheduled invitations
 - Admin tables: select-all and per-row checkboxes, row selection highlight, and an
   Invite button that drops you into the invite flow

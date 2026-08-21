@@ -1,15 +1,16 @@
 import type { Experience, Tab, ScreenProps } from '../../nav'
 import TopNav from '../current/TopNav'
 import CurrentScreen from '../current/screens'
-import PartnerRoot from '../current/PartnerRoot'
+import PartnerRoot from './PartnerRoot'
 import CoachRoot from '../current/CoachRoot'
 import { nextScreens } from './screens'
 
 /** The "after" side of the comparison. Everything renders inside `.v-next`, so
  *  next.css can restyle freely without touching the frozen baseline.
  *
- *  The nav and the partner experience are still borrowed from `current`. When we
- *  redesign either, add it under versions/next/ and swap the import. */
+ *  The nav is still borrowed from `current`. When we redesign it, add it under
+ *  versions/next/ and swap the import — the partner shell already forked that
+ *  way, in ./PartnerRoot. */
 export default function NextRoot({
   experience, tab, onNavigate, onSwitchExperience, onShowToc,
 }: {

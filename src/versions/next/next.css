@@ -146,3 +146,307 @@
 .v-next .sched-head { align-items: flex-start; margin-bottom: 19.5px; }
 .v-next .sched-new { align-self: flex-start; }
 .v-next .sched-sub { margin: 8px 0 0; font-size: 15.5px; }
+
+/* ---------- Admin > Upgrade members: the nudge composer ----------
+   Concept-only. The accordion shell is the invite flow's (`p-step*`), so the
+   two admin wizards still read as one pattern; everything below is the new
+   material inside a step. */
+
+.v-next .p-steps.nudge { max-width: 980px; }
+
+.v-next .nudge-help {
+  margin: 0 0 14px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink2);
+}
+
+/* ---- audience: multi-select dropdown ---- */
+
+.v-next .nudge-select-wrap { position: relative; max-width: 560px; }
+
+.v-next .nudge-select {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 16px;
+  color: var(--ink);
+  text-align: left;
+}
+.v-next .nudge-select:hover { border-color: var(--ink3); }
+.v-next .nudge-select.open { border-color: var(--ink); }
+.v-next .nudge-select.empty .nudge-select-value { color: var(--ink3); }
+.v-next .nudge-select svg { width: 20px; height: 20px; flex: none; margin-left: auto; color: var(--ink2); }
+
+.v-next .nudge-select-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* The tally stays visible once the field summarises, so the count never
+   depends on reopening the menu to recount ticks. */
+.v-next .nudge-count-pill {
+  flex: none;
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: var(--pill);
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.v-next .nudge-menu {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  max-height: 440px;   /* past ~nine options the list scrolls inside the menu */
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: var(--shadow-lift);
+}
+
+.v-next .nudge-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 6px;
+  font-size: 15.5px;
+  cursor: pointer;
+}
+.v-next .nudge-menu-item:hover { background: #f4f4f6; }
+.v-next .nudge-menu-item.on { font-weight: 600; }
+
+/* The resolved size of a generated grouping. Stays regular weight even on a
+   ticked row, so it reads as a fact about the group and not part of its name. */
+.v-next .nudge-menu-count { font-weight: 400; color: var(--ink2); }
+.v-next .nudge-menu-item input {
+  width: 18px; height: 18px;
+  accent-color: var(--ink);
+  flex: none;
+  cursor: pointer;
+}
+
+/* AI-generated grouping. The sparkle is the only thing separating it from a
+   segment the partner built by hand, so it carries the accent rather than
+   blending into the row; the negative margin keeps icon and label reading as
+   one unit inside the row's 12px gap. */
+.v-next .nudge-tip {
+  position: relative;
+  display: inline-flex;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-right: -5px;
+  color: var(--accent);
+  cursor: help;
+}
+.v-next .nudge-tip svg { width: 17px; height: 17px; flex: none; }
+
+/* The bubble hangs BELOW the sparkle and inside the menu box: the menu clips
+   its own overflow, so anything above the first row would be cut off. */
+.v-next .nudge-tip-bubble {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 8px);
+  left: -6px;
+  width: 290px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #2a2533;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 90ms ease;
+  pointer-events: none;
+}
+.v-next .nudge-tip:hover .nudge-tip-bubble,
+.v-next .nudge-tip:focus-visible .nudge-tip-bubble { opacity: 1; visibility: visible; }
+
+/* ---- radio rows: saved filters, and the send timing ---- */
+
+.v-next .nudge-options { display: flex; flex-direction: column; gap: 12px; }
+
+.v-next .nudge-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  background: var(--card);
+  font-size: 16px;
+  cursor: pointer;
+}
+.v-next .nudge-option:hover { border-color: var(--ink3); }
+.v-next .nudge-option.on { border: 2px solid var(--ink); padding: 17px 19px; background: #fafafb; }
+.v-next .nudge-option input { width: 19px; height: 19px; margin: 1px 0 0; accent-color: var(--ink); flex: none; }
+
+.v-next .nudge-option-label { display: flex; flex-direction: column; gap: 5px; font-weight: 600; }
+.v-next .nudge-option-desc { font-size: 15px; font-weight: 400; color: var(--ink2); }
+
+/* ---- step 2: compose ---- */
+
+.v-next .nudge-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.v-next .nudge-input:focus-visible,
+.v-next .p-textarea.tall:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.v-next .p-textarea.tall { min-height: 190px; border-color: var(--border2); }
+
+.v-next .nudge-count {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  color: var(--ink2);
+  text-align: right;
+}
+
+/* The label row carries a link on the right, so it can't use the plain
+   block label the subject field uses. */
+.v-next .nudge-field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 26px;
+}
+.v-next .nudge-field-head .p-field-label { margin-bottom: 14px; }
+
+.v-next .nudge-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.v-next .nudge-link:hover { color: var(--accent); }
+
+.v-next .nudge-token-label { margin: 22px 0 12px; font-size: 15px; color: var(--ink2); }
+
+.v-next .nudge-token-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.v-next .nudge-tokens { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.v-next .nudge-token {
+  padding: 7px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: var(--card);
+  font-size: 14px;
+  color: var(--ink);
+}
+.v-next .nudge-token:hover { border-color: var(--ink); background: #f4f4f6; }
+
+.v-next .p-field-label.spaced { margin-top: 30px; }
+
+/* ---- channel picker ---- */
+
+.v-next .nudge-channels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.v-next .nudge-channel {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 17px 16px;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+}
+.v-next .nudge-channel:hover { border-color: var(--ink3); }
+.v-next .nudge-channel.on { border: 2px solid var(--ink); padding: 16px 15px; }
+/* Not connected in this org: readable, clearly unavailable, not clickable. */
+.v-next .nudge-channel.off { background: #f7f7f8; color: var(--ink3); cursor: default; }
+.v-next .nudge-channel.off:hover { border-color: var(--border2); }
+
+.v-next .nudge-channel input { width: 19px; height: 19px; margin: 2px 0 0; accent-color: var(--ink); flex: none; }
+.v-next .nudge-channel-body { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.v-next .nudge-channel-name {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+.v-next .nudge-channel-name svg { width: 18px; height: 18px; flex: none; }
+.v-next .nudge-channel-desc { font-size: 14px; line-height: 1.4; color: var(--ink2); }
+.v-next .nudge-channel.off .nudge-channel-desc { color: var(--ink3); }
+
+/* The invite flow's footer is a lone right-aligned button; this one pairs a
+   link with it. */
+.v-next .p-steps.nudge .p-step-foot {
+  align-items: center;
+  gap: 26px;
+  margin-top: 30px;
+}
+
+/* ---- step 3: review ---- */
+
+.v-next .nudge-review {
+  margin: 0 0 34px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.v-next .nudge-review > div {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 20px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.v-next .nudge-review > div:last-child { border-bottom: none; }
+.v-next .nudge-review dt { font-size: 15.5px; font-weight: 700; }
+.v-next .nudge-review dd {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.v-next .nudge-review-note { display: block; margin-top: 6px; font-size: 15px; color: var(--ink2); }
+
+.v-next .nudge-when {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink2);
+}
+
+.v-next .nudge-note { margin: 26px 0 0; font-size: 15px; color: var(--ink2); }
+
+.v-next .nudge-send { display: flex; justify-content: flex-end; max-width: 980px; margin-top: 30px; }

@@ -273,6 +273,97 @@ export const inviteFlow = {
   ],
 }
 
+/** The CONCEPT rail: the current tree plus Upgrade members, which only exists
+ *  on the next side. Derived from `partnerNav` rather than copied, so anything
+ *  added to the shared rail still shows up on the concept. */
+export const partnerNavNext: typeof partnerNav = partnerNav.map((entry) =>
+  entry.id !== 'admin' ? entry : {
+    ...entry,
+    groups: entry.groups!.map((g) => ({
+      ...g,
+      items: g.items.flatMap((i) => (i === 'Invite members' ? [i, 'Upgrade members'] : [i])),
+    })),
+  },
+)
+
+/** Shared by the three groupings BetterUp derives from HRIS data. */
+const HRIS_TIP =
+  'BetterUp uses HRIS data to identify members in this group. Employees experiencing change are more likely to benefit from concentrated coaching.'
+
+/** Concept-only. The Upgrade members screen is a three-step nudge composer:
+ *  pick the audiences, write the message, review and send. */
+export const upgradeFlow = {
+  eyebrow: 'Admin',
+  title: 'Upgrade members',
+  steps: [
+    { n: 1, title: 'Select your audience' },
+    { n: 2, title: 'Write your message' },
+    { n: 3, title: 'Review and send' },
+  ],
+  audience: {
+    /** Accessible name for the dropdown; not rendered — the step header and
+     *  the helper line already say it. */
+    label: 'Audience',
+    help: 'Select all the audiences that apply',
+    placeholder: 'Select audiences',
+    /** `ai` marks a grouping BetterUp generated rather than one the partner
+     *  built from employee attributes; the sparkle is what tells the two apart,
+     *  and `tip` explains what the generation looked at. `count` is the size
+     *  BetterUp resolved the grouping to — the static segments carry no count,
+     *  since those resolve against the partner's own filters. Generated
+     *  groupings lead the list — they're the point of this screen, not a
+     *  footnote under the static segments. */
+    options: [
+      {
+        label: 'Most Likely to Benefit from Coaching',
+        ai: true,
+        count: 218,
+        tip: 'BetterUp looks at Grow usage to identify engaged members that demonstrate readiness for human coaching.',
+      },
+      { label: 'Recently hired', ai: true, count: 143, tip: HRIS_TIP },
+      { label: 'Recently promoted ICs', ai: true, count: 87, tip: HRIS_TIP },
+      { label: 'Impacted by org change', ai: true, count: 312, tip: HRIS_TIP },
+      { label: 'Finance' },
+      { label: 'Marketing' },
+      { label: 'Product' },
+      { label: 'Engineering' },
+      { label: 'Levels I - III' },
+      { label: 'Grow 2026 ICs Track' },
+      { label: 'Grow 2026 Managers Track' },
+    ],
+    preview: 'Preview members',
+  },
+  compose: {
+    subjectLabel: 'Subject',
+    subjectMax: 200,
+    messageLabel: 'Message',
+    messageMax: 3000,
+    fromTemplate: 'Start from a template',
+    saveTemplate: 'Save as template',
+    tokenLabel: 'Use these to personalize your message to each member:',
+    tokens: ['First name', 'Program name', 'Coach name', 'Next step'],
+    channelLabel: 'Send via',
+    channels: [
+      { id: 'email', label: 'Email', desc: 'Sent by BetterUp, from you. Replies go to you.' },
+      /** Not connected in this org — greyed out, same as the reference. */
+      { id: 'slack', label: 'Slack', desc: 'Sent by the BetterUp app in your Slack workspace.', off: true },
+      { id: 'teams', label: 'Microsoft Teams', desc: 'Sent by the BetterUp app in your Teams workspace.' },
+      { id: 'text', label: 'Text', desc: "Members without a phone number won't receive the nudge." },
+    ],
+    preview: 'Preview nudge',
+  },
+  review: {
+    audienceNote: 'Members who match these audiences when the nudge sends.',
+    whenLabel: 'When to send',
+    timing: [
+      { id: 'now', label: 'Send now', desc: 'Sends immediately' },
+      { id: 'later', label: 'Schedule for later', desc: 'Pick a date and time' },
+    ],
+    note: 'Members\u2019 notification preferences for the selected channel will be respected.',
+    submit: 'Send nudge',
+  },
+}
+
 export type PartnerColumn = {
   label: string
   /** Renders the info affordance the reference shows on explained columns. */

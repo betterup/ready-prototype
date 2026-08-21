@@ -268,3 +268,21 @@ export const CaretUp = (p: P) => (
 
 export const CheckIcon = (p: P) => <Svg {...p}><path {...s} d="m4.8 12.6 4.6 4.6 9.8-10.4" /></Svg>
 export const ArrowRight = (p: P) => <Svg {...p}><path {...s} d="M4.6 12h14M13 6.4l5.6 5.6-5.6 5.6" /></Svg>
+
+export const MobileIcon = (p: P) => (
+  <Svg {...p}>
+    <rect {...s} x="7.4" y="2.8" width="9.2" height="18.4" rx="1.8" />
+    <path {...s} d="M11 18.4h2" />
+  </Svg>
+)
+
+/** Stand-in for the Slack mark — a neutral four-cell glyph rather than a
+ *  hand-drawn approximation of someone else's logo. */
+export const GridIcon = (p: P) => (
+  <Svg {...p}>
+    <rect {...s} x="3.6" y="3.6" width="7" height="7" rx="1.6" />
+    <rect {...s} x="13.4" y="3.6" width="7" height="7" rx="1.6" />
+    <rect {...s} x="3.6" y="13.4" width="7" height="7" rx="1.6" />
+    <rect {...s} x="13.4" y="13.4" width="7" height="7" rx="1.6" />
+  </Svg>
+)
