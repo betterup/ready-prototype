@@ -28,10 +28,6 @@ const LEAF_DEST: Record<string, Dest> = {
 
 const BUILT: Dest[] = ['home', 'invite', 'members', 'scheduled']
 
-/** Groups that show no icon beside their label in the EXPANDED rail. The
- *  collapsed rail is icon-only, so it still uses RAIL_ICONS for these. */
-const NO_LABEL_ICON = ['admin']
-
 export default function PartnerRoot({ onSwitchExperience, onLogo }: {
   onSwitchExperience: (e: 'member' | 'partner' | 'coach') => void
   onLogo: () => void
@@ -39,7 +35,9 @@ export default function PartnerRoot({ onSwitchExperience, onLogo }: {
   // Collapsed on landing: the admin screens are wide tables, so the rail earns
   // its width only once you go looking for it.
   const [expanded, setExpanded] = useState(false)
-  const [openGroups, setOpenGroups] = useState<string[]>(['analytics', 'admin'])
+  // Analytics starts collapsed; Admin is where the built screens live, so it
+  // stays open.
+  const [openGroups, setOpenGroups] = useState<string[]>(['admin'])
   // Switching into the partner experience remounts this shell, so the initial
   // dest is also the landing screen — Home, same as the member experience.
   const [dest, setDest] = useState<Dest>('home')
@@ -116,7 +114,7 @@ export default function PartnerRoot({ onSwitchExperience, onLogo }: {
                   aria-expanded={groupOpen}
                   onClick={() => toggleGroup(entry.id)}
                 >
-                  {!NO_LABEL_ICON.includes(entry.id) && <Icon />}
+                  <Icon />
                   {entry.label}
                   <span className="spacer" />
                   {groupOpen ? <ChevronUp /> : <ChevronDown />}

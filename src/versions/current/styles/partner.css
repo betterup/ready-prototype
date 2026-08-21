@@ -63,6 +63,11 @@
   align-items: stretch;
   gap: 4px;
   padding: 16px 14px 26px;
+
+  /* Sub-items line up with the group LABEL above them, not with its icon:
+     the group row's padding + icon + gap. Derived rather than hard-coded, so
+     resizing the icon or the gap keeps the column true. */
+  --nav-indent: calc(14px + 21px + 12px);
 }
 
 .p-rail-toggle {
@@ -115,7 +120,7 @@
 
 .p-nav-label {
   margin: 12px 0 6px;
-  padding: 0 14px;
+  padding: 0 14px 0 var(--nav-indent);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.09em;
@@ -126,7 +131,7 @@
 .p-nav-divider { border: none; border-top: 1px solid var(--border); margin: 12px 14px 0; }
 
 .p-nav-leaf {
-  padding: 10px 14px 10px 34px;
+  padding: 10px 14px 10px var(--nav-indent);
   border: none;
   border-radius: 9px;
   background: none;
@@ -139,7 +144,7 @@
 
 /* ---- partner home ---- */
 
-.p-greeting { font-size: 40px; margin-bottom: 26px; }
+.p-greeting { font-size: 34px; margin-bottom: 22px; }
 .p-rule { border: none; border-top: 1px solid var(--border); margin: 0 0 34px; }
 .p-section { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
 
@@ -197,7 +202,10 @@
   text-transform: uppercase;
   color: var(--ink2);
 }
-.p-title { font-size: 46px; margin-bottom: 44px; }
+/* Page headers run one size across the partner experience, sized against the
+   20px step headers beneath them rather than towering over them. `.p-greeting`
+   above matches. */
+.p-title { font-size: 34px; margin-bottom: 32px; }
 
 .p-steps { display: flex; flex-direction: column; gap: 22px; max-width: 710px; }
 
