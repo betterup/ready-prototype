@@ -60,7 +60,9 @@ ones are dimmed with a "not built yet" chip. "Back to prototype" (or any link) c
 
 **Process rule: every feature added to the concept gets an entry here.** The list lives
 in `src/tocData.ts` — add the item under its persona, tag the pillar, and point `target`
-at the tab. The TOC is harness chrome (like the mode bar), so it belongs to neither
+at where it lives: `tab` for a member screen, or `dest` for a partner rail destination
+(the partner shell runs its own rail rather than the member tabs). A partner link also
+expands the rail on arrival, so the highlighted leaf shows where in Admin you landed. The TOC is harness chrome (like the mode bar), so it belongs to neither
 version and overlays the comparison without unmounting it — chat state survives.
 
 ## Three experiences

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { partnerNavNext } from '../../data'
 import {
   ChevronDown, ChevronUp, GearIcon, HelpIcon, HomeIcon, InsightsIcon,
@@ -35,20 +35,34 @@ const BUILT: Dest[] = ['home', 'invite', 'upgrade', 'members', 'scheduled']
  *  haven't been redesigned yet, so only the differences live here.
  *
  *  Differences from the baseline so far:
- *  - the rail carries an Admin > Upgrade members leaf, and its screen. */
-export default function PartnerRoot({ onSwitchExperience, onLogo }: {
+ *  - the rail carries an Admin > Upgrade members leaf, and its screen;
+ *  - it accepts a `request` so a TOC link can open one of those screens. */
+export default function PartnerRoot({ request, onSwitchExperience, onLogo }: {
+  /** A destination asked for from outside — today, a table-of-contents link.
+   *  A new object each time it's asked for, so the effect below re-fires even
+   *  when it's the same screen twice. */
+  request?: { dest: string } | null
   onSwitchExperience: (e: 'member' | 'partner' | 'coach') => void
   onLogo: () => void
 }) {
   // Collapsed on landing: the admin screens are wide tables, so the rail earns
   // its width only once you go looking for it.
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(!!request)
   // Analytics starts collapsed; Admin is where the built screens live, so it
   // stays open.
   const [openGroups, setOpenGroups] = useState<string[]>(['admin'])
   // Switching into the partner experience remounts this shell, so the initial
   // dest is also the landing screen — Home, same as the member experience.
-  const [dest, setDest] = useState<Dest>('home')
+  const [dest, setDest] = useState<Dest>(request?.dest ?? 'home')
+
+  // Arriving from the TOC: open the asked-for screen, and expand the rail so
+  // the highlighted leaf shows where in Admin you landed. Only fires on a new
+  // request, so it never fights with the rail you're driving by hand.
+  useEffect(() => {
+    if (!request) return
+    setDest(request.dest)
+    setExpanded(true)
+  }, [request])
 
   const toggleGroup = (id: string) =>
     setOpenGroups((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]))

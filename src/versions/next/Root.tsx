@@ -12,10 +12,12 @@ import { nextScreens } from './screens'
  *  versions/next/ and swap the import — the partner shell already forked that
  *  way, in ./PartnerRoot. */
 export default function NextRoot({
-  experience, tab, onNavigate, onSwitchExperience, onShowToc,
+  experience, tab, partnerDest, onNavigate, onSwitchExperience, onShowToc,
 }: {
   experience: Experience
   tab: Tab
+  /** A TOC link into the partner shell's rail. */
+  partnerDest?: { dest: string } | null
   onSwitchExperience: (e: Experience) => void
   onShowToc: () => void
 } & ScreenProps) {
@@ -24,7 +26,7 @@ export default function NextRoot({
   if (experience === 'partner') {
     return (
       <div className="v-next">
-        <PartnerRoot onSwitchExperience={onSwitchExperience} onLogo={onShowToc} />
+        <PartnerRoot request={partnerDest} onSwitchExperience={onSwitchExperience} onLogo={onShowToc} />
       </div>
     )
   }

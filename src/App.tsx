@@ -27,6 +27,10 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('home')
   // Which product you're in. Shared, so both panes never diverge.
   const [experience, setExperience] = useState<Experience>('member')
+  // A TOC link into the partner shell, which runs its own rail instead of the
+  // member tabs. A fresh object per click, so clicking the same entry twice
+  // still lands you back on the screen.
+  const [partnerDest, setPartnerDest] = useState<{ dest: string } | null>(null)
   const [mode, setMode] = useState<Mode>('split')
   // Starts at the far right: the current version fills the pane and you drag
   // left to reveal the concept.
@@ -40,7 +44,8 @@ export default function App() {
   const openFeature = (item: TocItem) => {
     if (!item.target) return
     setExperience(item.target.experience)
-    setTab(item.target.tab)
+    if (item.target.tab) setTab(item.target.tab)
+    setPartnerDest(item.target.dest ? { dest: item.target.dest } : null)
     setMode('next')
     setTocOpen(false)
   }
@@ -71,7 +76,7 @@ export default function App() {
         split={split}
         onSplit={setSplit}
         current={<CurrentRoot experience={experience} tab={tab} onNavigate={setTab} onSwitchExperience={setExperience} onShowToc={() => setTocOpen(true)} />}
-        next={<NextRoot experience={experience} tab={tab} onNavigate={setTab} onSwitchExperience={setExperience} onShowToc={() => setTocOpen(true)} />}
+        next={<NextRoot experience={experience} tab={tab} partnerDest={partnerDest} onNavigate={setTab} onSwitchExperience={setExperience} onShowToc={() => setTocOpen(true)} />}
       />
 
       {tocOpen && <Toc onOpenFeature={openFeature} onClose={() => setTocOpen(false)} />}

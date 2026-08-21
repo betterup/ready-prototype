@@ -6,8 +6,9 @@ import type { Experience, Tab } from './nav'
 
    PROCESS NOTE: every feature added to the concept gets an entry here.
    Add the item under its persona, tag the pillar, and point `target` at
-   the tab where it lives. Items without a `target` render as
-   "not built yet" and don't link.
+   where it lives — `tab` for a member screen, `dest` for a partner rail
+   destination. Items without a `target` render as "not built yet" and
+   don't link.
    ------------------------------------------------------------------ */
 
 export type TocPillar = 'Braid' | 'IC-Specific' | 'Scalable' | 'Configurable'
@@ -17,8 +18,10 @@ export const PILLARS: TocPillar[] = ['Configurable', 'IC-Specific', 'Braid', 'Sc
 export type TocItem = {
   pillar: TocPillar
   title: string
-  /** Where the feature lives in the concept. Absent = not built yet. */
-  target?: { experience: Experience; tab: Tab }
+  /** Where the feature lives in the concept. Absent = not built yet.
+   *  `tab` addresses the member shell's screen set; `dest` addresses the
+   *  partner shell, which runs its own rail rather than those tabs. */
+  target?: { experience: Experience; tab?: Tab; dest?: string }
   /** One line shown under the title for presentation context. */
   note?: string
 }
@@ -69,6 +72,8 @@ export const tocSections: TocSection[] = [
       {
         pillar: 'Scalable',
         title: 'Grow to Ready upgrade flow',
+        target: { experience: 'partner', dest: 'upgrade' },
+        note: 'Nudge the AI-generated “Most Likely to Benefit from Coaching” group',
       },
       {
         pillar: 'Configurable',
